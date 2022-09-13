@@ -30,7 +30,7 @@ class AlertSystem(object):
     def get_network_details(self):
         self.hostname  = socket.gethostname()
         self.ip_address = socket.gethostbyname(self.hostname)
-        print("IP address: {}".format(self.ip_address))
+        # print("IP address: {}".format(self.ip_address))
         
     def datetime_stamp(self):
         return(str(datetime.now()))
@@ -43,11 +43,11 @@ class AlertSystem(object):
     def daily_email(self):
         if self.time_stamp() == self.daily_email_time:
             self.confirmation_email()
-            print("Sent daily email, sleeping..")
+            # print("Sent daily email, sleeping..")
             time.sleep(60)
                 
     def confirmation_email(self):
-        print("Sending Email")
+        # print("Sending Email")
         time = self.datetime_stamp()
         fromaddr = cf.email_settings["fromaddr"]
         toaddr = cf.email_settings["toaddr"]
@@ -65,11 +65,11 @@ class AlertSystem(object):
         server.ehlo()
         server.login(cf.email_settings["fromaddr"], cf.email_settings["password"])
         text = msg.as_string()
-        print(text)
+        # print(text)
         server.sendmail(fromaddr, toaddr, text)
        
     def email(self):
-        print("Alert! - Sending Email")
+        # print("Alert! - Sending Email")
         time = self.datetime_stamp()
         fromaddr = cf.email_settings["fromaddr"]
         toaddr = cf.email_settings["toaddr"]
@@ -86,7 +86,7 @@ class AlertSystem(object):
         server.ehlo()
         server.login(cf.email_settings["fromaddr"], cf.email_settings["password"])
         text = msg.as_string()
-        print(text)
+        # print(text)
         server.sendmail(fromaddr, toaddr, text)
         
     def disk_space_available(self):
@@ -98,10 +98,10 @@ class AlertSystem(object):
         
     def callback(self, channel):
         if GPIO.input(channel):
-            print("Sound Detected")
+            # print("Sound Detected")
             self.count += 1 
         else:
-            print("Sound Detected")
+            # print("Sound Detected")
             self.count += 1
             
     def check_temp(self):
@@ -110,24 +110,25 @@ class AlertSystem(object):
         temp = temp.replace("temp=","")
         self.temp = float(temp)
         if float(temp) >= self.max_temp:
-                print("{} > {} - Heat Alert".format(self.temp, self.max_temp))
+                # print("{} > {} - Heat Alert".format(self.temp, self.max_temp))
                 sys.exit()
                 
     def reset_values(self):
-        print("reseting values")
+        # print("reseting values")
         self.count = 0
         self.reset = 0
         
     def listening(self):
         if self.count < self.required:
-            print(
-                "cycle:[{}]/{} temp:[{}]/{} detected:[{}]/{})".format(
-                    self.reset, self.cycle, self.temp,
-                    self.max_temp, self.count, self.required)
-                )
+            pass
+            # print(
+            #     "cycle:[{}]/{} temp:[{}]/{} detected:[{}]/{})".format(
+            #         self.reset, self.cycle, self.temp,
+            #         self.max_temp, self.count, self.required)
+            #     )
         elif self.count >= self.required:
             self.email()
-            print("Sleeping for {} seconds".format(self.after_alert_sleep_time))
+            # print("Sleeping for {} seconds".format(self.after_alert_sleep_time))
             time.sleep(self.after_alert_sleep_time)
             self.reset_values()
             

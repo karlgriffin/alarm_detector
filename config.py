@@ -15,6 +15,6 @@ variables = {
 email_settings = {
     "fromaddr":"sample@hotmail.com",
     "password":"PasswordHERE",
-    "server":"smtp.live.com:587",
+    "server":"smtp-mail.outlook.com:587",
     "toaddr":"sample@hotmail.com"
     }
